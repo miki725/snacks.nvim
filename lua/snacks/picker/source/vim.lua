@@ -421,7 +421,8 @@ function M.tags(opts, ctx)
             text = name,
             name = name,
             file = filename:sub(1, 1) == "/" and filename or dir .. "/" .. filename,
-            search = cmd,
+            -- tag patterns are meant to be searched with 'magic' off, like `:tag` does
+            search = (cmd:gsub("^([/?])", "%1\\M\\C")),
             kind = kind,
             lsp_kind = lsp_kinds[kind] or "Text",
           }
